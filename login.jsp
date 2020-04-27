@@ -131,6 +131,7 @@
         <link href="libs/bootstrap_3.4.1/css/bootstrap.min.css" rel="stylesheet">
         <link href="css/Roboto.css" rel="stylesheet">
         <link href="css/custom-common.css" rel="stylesheet">
+        <link href="libs/simple-keyboard/css/index.css" rel="stylesheet">
 
         <!--[if lt IE 9]>
         <script src="js/html5shiv.min.js"></script>
@@ -426,6 +427,7 @@
 
     <script src="libs/jquery_3.4.1/jquery-3.4.1.js"></script>
     <script src="libs/bootstrap_3.4.1/js/bootstrap.min.js"></script>
+    <script src="libs/simple-keyboard/index.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -504,6 +506,59 @@
         function changeUsername (e) {
             document.getElementById("changeUserForm").submit();
         }
+    </script>
+
+    <script>
+        var Keyboard = window.SimpleKeyboard.default;
+
+        var keyboard = new Keyboard({
+            onChange: onChange,
+            onKeyPress: onKeyPress
+        });
+
+        /**
+        * Update simple-keyboard when input is changed directly
+        */
+        document.querySelector(".input-keyboard").addEventListener("input", function(event){
+            keyboard.setInput(event.target.value);
+        });
+
+
+        //console.log(keyboard);
+
+        function onChange(input) {
+            document.querySelector(".input-keyboard").value = input;
+            //console.log("Input changed", input);
+        }
+
+        function onKeyPress(button) {
+            //console.log("Button pressed", button);
+
+            /**
+            * If you want to handle the shift and caps lock buttons
+            */
+            if (button === "{shift}" || button === "{lock}") handleShift();
+        }
+
+        function handleShift() {
+            let currentLayout = keyboard.options.layoutName;
+            let shiftToggle = currentLayout === "default" ? "shift" : "default";
+
+            keyboard.setOptions({
+                layoutName: shiftToggle
+            });
+        }
+
+    </script>
+
+    <script>
+        $("#basic-pwd-kb").hide();
+        $("#password").focusin(function(){
+            $("#basic-pwd-kb").show();
+        });
+        $("#username").focusin(function(){
+            $("#basic-pwd-kb").hide();
+        });
     </script>
 
     <%!

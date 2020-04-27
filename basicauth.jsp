@@ -174,7 +174,8 @@
     <% }%>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
         <label for="password"><%=AuthenticationEndpointUtil.i18n(resourceBundle, "password")%></label>
-        <input id="password" name="password" type="password" class="form-control" placeholder="" autocomplete="off">
+        <input id="password" name="password" type="password" class="form-control input-keyboard" placeholder="" autocomplete="off">
+        <div id="basic-pwd-kb" class="simple-keyboard"></div>
     </div>
     <%
         if (reCaptchaEnabled) {
