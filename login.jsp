@@ -509,11 +509,39 @@
     </script>
 
     <script>
+       
+        function generateLayout(){
+            var keys = [0,1,2,3,4,5,6,7,8,9];
+            var layout = ['','','', ''];
+            var lineMaxKeys = 3, 
+                currentLineKeys = 0, 
+                currentLineIndex = 0;
+            while(keys.length > 1){
+                var index =  Math.floor(Math.random() * Math.floor(keys.length));
+                layout[currentLineIndex]+= (currentLineKeys == 0 ? '' : ' ') + keys[index];
+                currentLineKeys++;
+                if(currentLineKeys == 3){
+                    currentLineIndex ++;
+                    currentLineKeys = 0;
+                }
+                keys.splice(index,1);
+            }
+            layout[currentLineIndex] += '' + keys[0] + ' {bksp}';
+            return layout;
+        }
+
         var Keyboard = window.SimpleKeyboard.default;
 
         var keyboard = new Keyboard({
             onChange: onChange,
-            onKeyPress: onKeyPress
+            onKeyPress: onKeyPress,
+            layout: {
+                'numeric': generateLayout()
+            },
+            layoutName: 'numeric',
+            display: {
+                '{bksp}': '< Suppr'
+            }
         });
 
         /**
@@ -549,16 +577,22 @@
             });
         }
 
-    </script>
-
-    <script>
-        $("#basic-pwd-kb").hide();
+        
+        /*$("#basic-pwd-kb").hide();
         $("#password").focusin(function(){
+            keyboard.setOptions({
+                layout: {
+                    'numeric': generateLayout()
+                },
+                layoutName: 'numeric'
+            });
             $("#basic-pwd-kb").show();
         });
         $("#username").focusin(function(){
             $("#basic-pwd-kb").hide();
         });
+        */
+
     </script>
 
     <%!
